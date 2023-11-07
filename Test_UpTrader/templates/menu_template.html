@@ -1,0 +1,20 @@
+
+<ul>
+    {% draw_menu 'main_menu' current_url %}
+    {% for item in menu_items %}
+        <li{% if item.url == current_url %} class="active"{% endif %}>
+            <a href="{{ item.url|default:item.name_url }}">{{ item.name }}</a>
+            {% if item.parent_id is None %}
+                <ul>
+                    {% for sub_item in menu_items %}
+                        {% if sub_item.parent_id == item.id %}
+                            <li{% if sub_item.url == current_url %} class="active"{% endif %}>
+                                <a href="{{ sub_item.url|default:sub_item.name_url }}">{{ sub_item.name }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
